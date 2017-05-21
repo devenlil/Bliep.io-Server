@@ -1,0 +1,11 @@
+{
+  "verbose": true,
+  "serverPort": 8080,
+  "maxPlayers": 5,
+  "maxNickLength": 15,
+  "worldSize": 1000,
+  "perFoodtypeSpawnAmount": 3,
+  "maxSquareFood": 15,
+  "maxTriangleFood": 7,
+  "maxPentagonFood": 3
+}

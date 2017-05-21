@@ -1,0 +1,20 @@
+{
+  "name": "Bliep.ioServer",
+  "version": "0.0.1",
+  "description": "An open source Diep.io server implementation.",
+  "keywords": "bliep.io, diep.io server, diep.io, diepio, game server",
+  "homepage": "https://github.com/devenlil/Bliep.io-Server",
+  "license": "Apache-2.0",
+  "author": "Enlil Odisho <agar.pw@outlook.com>",
+  "main": "src/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devenlil/Bliep.io-Server"
+  },
+  "dependencies": {
+    "ws": "latest"
+  },
+  "scripts": {
+    "start": "node src/app.js"
+  }
+}
