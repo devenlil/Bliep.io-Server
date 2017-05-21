@@ -9,6 +9,7 @@ Notice! This is not the diep.io protocol.
 This packet is sent to the player immediately after they connect.
 If player does not respond with packet 1 within 10 seconds of sending this packet,
 they will be kicked.
+
 | Bytes | Data Type | Description |
 |-------|-----------|-------------|
 | 0     | uint8     | Packet Id   |
@@ -19,6 +20,7 @@ This packet is sent to the client when a new tank(s) enters the players viewing
 range or the player presses play. The client stores the information sent in this
 packet as information such as a tank's nickname or tank type will no longer be
 sent to the player for that tank.
+
 | Bytes | Data Type    | Description          |
 |-------|--------------|----------------------|
 | 0     | uint8        | Packet Id            |
@@ -36,6 +38,7 @@ sent to the player for that tank.
 ### Packet 21: Forget Player(s)
 This is packet is sent to the client when a player disconnects and must be
 removed from the canvas.
+
 | Bytes | Data Type | Description  |
 |-------|-----------|--------------|
 | 0     | uint8     | Packet Id    |
@@ -46,6 +49,7 @@ removed from the canvas.
 This packet is sent to the client 30 times per second. It contains the new score
 and position/rotation of the player and other players in the viewing range and
 the players bullets location.
+
 | Bytes | Data Type          | Description          |
 |-------|--------------------|----------------------|
 | 0     | uint8              | Packet Id            |
@@ -71,6 +75,7 @@ the players bullets location.
 
 ### Packet 30: Add Food
 This packet is sent to the client when new food is spawned in.
+
 | Bytes | Data Type | Description       |
 |-------|-----------|-------------------|
 | 0     | uint8     | Packet Id         |
@@ -85,6 +90,7 @@ This packet is sent to the client when new food is spawned in.
 
 ### Packet 35: Spawn Bullet
 This packet is sent to the client when a new bullet is spawned.
+
 | Bytes | Data Type | Description     |
 |-------|-----------|-----------------|
 | 0     | uint8     | Packet Id       |
@@ -96,6 +102,7 @@ This packet is sent to the client when a new bullet is spawned.
 
 ### Packet 1: Handshake
 This packet is sent after receiving packet 0 from server.
+
 | Bytes | Data Type | Description      |
 |-------|-----------|------------------|
 | 0     | uint8     | Packet Id        |
@@ -103,12 +110,14 @@ This packet is sent after receiving packet 0 from server.
 
 ### Packet 2: Heartbeat
 This packet is sent every second to keep the connection alive.
+
 | Bytes | Data Type | Description |
 |-------|-----------|-------------|
 | 0     | uint8     | Packet Id   |
 
 ### Packet 10: Set Nickname & Play
 This packet is sent when the player presses enter on the menu screen to play.
+
 | Bytes | Data Type | Description                  |
 |-------|-----------|------------------------------|
 | 0     | uint8     | Packet Id                    |
@@ -117,6 +126,7 @@ This packet is sent when the player presses enter on the menu screen to play.
 
 ### Packet 50: Mouse Move
 This packet is sent when the player moves their mouse.
+
 | Bytes | Data Type | Description            |
 |-------|-----------|------------------------|
 | 0     | uint8     | Packet Id              |
@@ -124,6 +134,7 @@ This packet is sent when the player moves their mouse.
 
 ### Packet 51: Movement key press
 This packet is sent when a WASD key is pressed or released.
+
 | Bytes | Data Type | Description |
 |-------|-----------|-------------|
 | 0     | uint8     | Packet Id   |
@@ -134,6 +145,7 @@ This packet is sent when a WASD key is pressed or released.
 
 ### Packet 52: Fire Bullet
 This packet is sent when the tanks needs to start or stop firing bullets.
+
 | Bytes | Data Type | Description  |
 |-------|-----------|--------------|
 | 0     | uint8     | Packet Id    |
