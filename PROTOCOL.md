@@ -90,6 +90,7 @@ This packet is sent to the client when new food is spawned in.
 
 ### Packet 35: Spawn Bullet
 This packet is sent to the client when a new bullet is spawned.
+(Inactive - Using packet 25 for now.)
 
 | Bytes | Data Type | Description     |
 |-------|-----------|-----------------|

@@ -8,11 +8,13 @@ function Basic(player) {
   // Upgrades
   this.healthRegen       = -1;
   this.maxHealth         = -1;
-  this.bulletSpeed       = 0.5;
+  this.bulletSpeed       = 0.4;
   this.bulletPenetration = -1;
   this.bulletDamage      = 5;
   this.reload            = 500; // in milliseconds
   this.movementSpeed     = 0.25;
+
+  this.reloading = false;
 
   this.fireLoopId = null;
   this.bulletCleanupId = setInterval(this.bulletCleanup.bind(this), 1000);
@@ -65,9 +67,21 @@ Basic.prototype.setFiring = function(mode) {
 };
 
 Basic.prototype.fireLoop = function() {
+  // Check if reloading
+  if (this.reloading) {
+    return;
+  }
+  this.reloading = true;
+
+  // Fire bullet
   var bullet = new Projectile.Bullet(this);
   bullet.fire();
   this.bullets.push(bullet);
+
+  // Set reloading to true
+  setInterval(function() {
+    this.reloading = false;
+  }.bind(this), this.reload);
 };
 
 Basic.prototype.bulletCleanup = function() {

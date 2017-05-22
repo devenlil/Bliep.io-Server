@@ -12,7 +12,7 @@ function Bullet(tank) {
   };
   this.velocity = {
     'x': Math.cos(this.angle)*this.tank.getBulletSpeed(),
-    'y': -Math.sin(this.angle)*this.tank.getBulletSpeed()
+    'y': Math.sin(this.angle)*this.tank.getBulletSpeed()
   };
   this.targetPosition = {
     'x': this.position.x + (this.bulletLife * this.velocity.x),
@@ -34,7 +34,7 @@ Bullet.prototype.update = function() {
   }
 
   // movement
-  /*if (this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize) {
+  if (this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize) {
     this.position.x = this.tank.owner.gameServer.config.worldSize;
   } else if (this.position.x + this.velocity.x < 0) {
     this.position.x = 0;
@@ -47,7 +47,7 @@ Bullet.prototype.update = function() {
     this.position.y = 0;
   } else {
     this.position.y += this.velocity.y;
-  }*/
+  }
   /*this.position.x += this.velocity.x;
   this.position.y += this.velocity.y;*/
 
