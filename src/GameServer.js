@@ -9,9 +9,6 @@ var Packet = require('./packet');
 var WebSocket = require('ws');
 
 function GameServer() {
-  this.startDate = parseInt((new Date()).toISOString().slice(0,10).replace(/-/g,""));
-  this.startTime =
-
   this.config = Config;
   this.logger = new Logger();
   this.logger.setVerbose(this.config.verbose);
