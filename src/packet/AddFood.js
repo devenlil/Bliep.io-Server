@@ -23,11 +23,11 @@ AddFood.prototype.build = function() {
     this.data.setUint8(this.byteOffset++, fid);
 
     // Food Position X
-    this.data.setUint32(this.byteOffset, food.position.x);
+    this.data.setInt32(this.byteOffset, food.position.x);
     this.byteOffset += 4;
 
     // Food Position Y
-    this.data.setUint32(this.byteOffset, food.position.y);
+    this.data.setInt32(this.byteOffset, food.position.y);
     this.byteOffset += 4;
   }.bind(this));
 

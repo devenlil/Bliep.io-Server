@@ -36,31 +36,17 @@ Bullet.prototype.update = function() {
   }
 
   // Bullet Movement
-  // Check if bullet is out-of-bounds
-  if (this.position.x + this.velocity.x < 0
-    || this.position.y + this.velocity.y < 0
-    || this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize
-    || this.position.y + this.velocity.y > this.tank.owner.gameServer.config.worldSize) {
-      this.destroy();
-      return;
-  }
   var elapsed = (Date.now() - this.lastMoved);
   this.position.x += this.velocity.x * elapsed;
   this.position.y += this.velocity.y * elapsed;
-  /*if (this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize) {
-    this.position.x = this.tank.owner.gameServer.config.worldSize;
-  } else if (this.position.x + this.velocity.x < 0) {
-    this.position.x = 0;
-  } else {
-    this.position.x += this.velocity.x;
+
+  // Check if bullet is out-of-bounds
+  if (this.position.x < 0 || this.position.y < 0
+    || this.position.x > this.tank.owner.gameServer.config.worldSize
+    || this.position.y > this.tank.owner.gameServer.config.worldSize) {
+      this.destroy();
+      return;
   }
-  if (this.position.y + this.velocity.y > this.tank.owner.gameServer.config.worldSize) {
-    this.position.y = this.tank.owner.gameServer.config.worldSize;
-  } else if (this.position.y + this.velocity.y < 0) {
-    this.position.y = 0;
-  } else {
-    this.position.y += this.velocity.y;
-  }*/
 
   this.bulletLife -= elapsed;
   this.lastMoved = Date.now();

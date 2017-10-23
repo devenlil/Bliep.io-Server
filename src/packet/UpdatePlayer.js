@@ -34,11 +34,11 @@ UpdatePlayer.prototype.build = function() {
     this.byteOffset += 4;
 
     // Player Position X
-    this.data.setUint32(this.byteOffset, player.position.x);
+    this.data.setInt32(this.byteOffset, player.position.x);
     this.byteOffset += 4;
 
     // Player Position Y
-    this.data.setUint32(this.byteOffset, player.position.y);
+    this.data.setInt32(this.byteOffset, player.position.y);
     this.byteOffset += 4;
 
     // Player rotation
@@ -59,11 +59,11 @@ UpdatePlayer.prototype.build = function() {
         this.data.setUint8(this.byteOffset++, bullet.typeId);
 
         // Bullet Position X
-        this.data.setUint32(this.byteOffset, bullet.position.x);
+        this.data.setInt32(this.byteOffset, bullet.position.x);
         this.byteOffset += 4;
 
         // Bullet Position Y
-        this.data.setUint32(this.byteOffset, bullet.position.y);
+        this.data.setInt32(this.byteOffset, bullet.position.y);
         this.byteOffset += 4;
       }
     }.bind(this));

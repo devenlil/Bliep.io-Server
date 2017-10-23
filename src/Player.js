@@ -118,12 +118,6 @@ Player.prototype.notifyUpdate = function() {
   this.socket.sendPacket(new Packet.UpdatePlayer(this.socket, nearbyPlayers));
   // Update all nearby players' bullets
   var unknownNearbyBullets = []; // Stores actual bullet obj (not id)
-  /*this.tank.bullets.forEach(function(bullet) {
-    if (this.knownBullets.indexOf(bullet.id) == -1) {
-      unknownNearbyBullets.push(bullet);
-      this.knownBullets.push(bullet.id);
-    }
-  }.bind(this));*/
   nearbyPlayers.forEach(function(nearbyPlayer) {
     nearbyPlayer.tank.bullets.forEach(function(bullet) {
       var index = this.knownBullets.findIndex(b => b.id == bullet.id);

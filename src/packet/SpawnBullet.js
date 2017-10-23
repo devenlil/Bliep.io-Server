@@ -37,11 +37,11 @@ SpawnBullet.prototype.build = function() {
     this.byteOffset += 2;
 
     // Bullet Start Position X
-    this.data.setUint32(this.byteOffset, bullet.position.x);
+    this.data.setInt32(this.byteOffset, bullet.position.x);
     this.byteOffset += 4;
 
     // Bullet Start Position Y
-    this.data.setUint32(this.byteOffset, bullet.position.y);
+    this.data.setInt32(this.byteOffset, bullet.position.y);
     this.byteOffset += 4;
 
     // Bullet Life

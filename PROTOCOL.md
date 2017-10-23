@@ -61,8 +61,8 @@ UPDATE: This packet is no longer being used for bullets, instead see packet 35.
 |-------------|--------------------------|
 | uint32      | Player's Id (0=you)      |
 | uint32      | Player's Score           |
-| uint32      | Player's Position X      |
-| uint32      | Player's Position Y      |
+| int32       | Player's Position X      |
+| int32       | Player's Position Y      |
 | uint16      | Player's Rotation (!you) |
 | uint8       | Player's Bullet Count    |
 | Bullet Data | Data for Player's Bullet |
@@ -70,8 +70,8 @@ UPDATE: This packet is no longer being used for bullets, instead see packet 35.
 | Data Type | Description         |
 |-----------|---------------------|
 | uint8     | Bullet Type Id      |
-| uint32    | Bullet's Position X |
-| uint32    | Bullet's Position Y |
+| int32     | Bullet's Position X |
+| int32     | Bullet's Position Y |
 
 ### Packet 30: Add Food
 This packet is sent to the client when new food is spawned in.
@@ -85,8 +85,8 @@ This packet is sent to the client when new food is spawned in.
 | Data Type | Description     |
 |-----------|-----------------|
 | uint8     | Food Type Id    |
-| uint32    | Food Position X |
-| uint32    | Food Position Y |
+| int32     | Food Position X |
+| int32     | Food Position Y |
 
 ### Packet 35: Spawn Player Bullet(s)
 This packet is sent to the client after packet 25 if there are any bullets which
@@ -106,8 +106,8 @@ client in locally calculating and rendering bullets and their movement.
 | uint8   | Bullet Type Id          |
 | float32 | Bullet Speed            |
 | uint16  | Bullet Aim Angle        |
-| uint32  | Bullet Start Position X |
-| uint32  | Bullet Stop Position Y  |
+| int32   | Bullet Start Position X |
+| int32   | Bullet Stop Position Y  |
 | uint16  | Bullet Life             |
 
 ## Serverbound Packets (client -> server)
