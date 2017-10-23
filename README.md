@@ -15,7 +15,7 @@ This repository is still a work in progress. Check back later!
 - Connection with client
 - Players moving around
 - Player Names
-- Shooting Bullets (although unstable and require fine tuning)
+- Shooting Bullets
 
 ## What's not working
-- Lot's of stuff but now working on: refining shooting bullets
+- Lot's of stuff but now working on: refining player movement
