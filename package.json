@@ -12,7 +12,8 @@
     "url": "https://github.com/devenlil/Bliep.io-Server"
   },
   "dependencies": {
-    "ws": "latest"
+    "ws": "latest",
+    "memwatch-next": "latest"
   },
   "scripts": {
     "start": "node src/app.js"

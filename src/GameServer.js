@@ -27,17 +27,19 @@ function GameServer() {
 module.exports = GameServer;
 
 GameServer.prototype.start = function() {
-  this.socketServer = WebSocket.Server({ port: this.config.serverPort }, function() {
-    this.logger.log('Listening on port ' + this.config.serverPort, true);
+  this.socketServer = new WebSocket.Server({ port: this.config.serverPort },
+    function() {
+      this.logger.log('Listening on port ' + this.config.serverPort, true);
 
-    // Spawn initial food
-    this.spawnFood();
+      // Spawn initial food
+      this.spawnFood();
 
-    // Setup automatic loops
-    this.gameLoop = setInterval(this.update.bind(this), 1);
-    this.foodLoop = setInterval(this.spawnFood.bind(this), 30000); // every 30 seconds
-    this.cleanupLoop = setInterval(this.cleanup.bind(this), 1000);
-  }.bind(this));
+      // Setup automatic loops
+      this.gameLoop = setInterval(this.update.bind(this), 1);
+      this.foodLoop = setInterval(this.spawnFood.bind(this), 30000); // every 30 seconds
+      this.cleanupLoop = setInterval(this.cleanup.bind(this), 1000);
+    }.bind(this)
+  );
 
   this.socketServer.on('error', function(error) {
     switch (error.code) {
