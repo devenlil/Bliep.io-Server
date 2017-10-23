@@ -49,6 +49,7 @@ removed from the canvas.
 This packet is sent to the client 30 times per second. It contains the new score
 and position/rotation of the player and other players in the viewing range and
 the players bullets location.
+UPDATE: This packet is no longer being used for bullets, instead see packet 35.
 
 | Bytes | Data Type          | Description          |
 |-------|--------------------|----------------------|
