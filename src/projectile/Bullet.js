@@ -1,40 +1,53 @@
 function Bullet(tank) {
-  this.id          = 1; // projectile type id
+  this.id          = tank.owner.gameServer.getNextAvailableBid();
+  this.typeId      = 1; // projectile type id
   this.tank        = tank;
   this.angle       = tank.owner.aimAngle;
-  this.bulletLife  = 10000; // in millseconds
-  this.elapsedTime = 0;
+  this.bulletLife  = 3000; // in millseconds
+  this.lastMoved   = -1;
   this.active      = true;
 
   this.position    = {
-    'x': tank.owner.position.x,
-    'y': tank.owner.position.y
+    'x': tank.owner.position.x+Math.cos(this.angle)*this.tank.calcGunOffset(),
+    'y': tank.owner.position.y+Math.sin(this.angle)*this.tank.calcGunOffset()
   };
   this.velocity = {
     'x': Math.cos(this.angle)*this.tank.getBulletSpeed(),
     'y': Math.sin(this.angle)*this.tank.getBulletSpeed()
   };
-  this.targetPosition = {
+  /*this.targetPosition = {
     'x': this.position.x + (this.bulletLife * this.velocity.x),
     'y': this.position.y + (this.bulletLife * this.velocity.y)
-  };
+  };*/
 }
 
 module.exports = Bullet;
 
 Bullet.prototype.fire = function() {
   // start loop
+  this.lastMoved = Date.now();
   this.bulletLoop = setInterval(this.update.bind(this), 1);
 };
 
 Bullet.prototype.update = function() {
-  if (this.elapsedTime > this.bulletLife) {
+  if (this.bulletLife <= 0) {
     this.destroy();
     return;
   }
 
-  // movement
-  if (this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize) {
+  // Bullet Movement
+  // Check if bullet is out-of-bounds
+  if (this.position.x + this.velocity.x < 0
+    || this.position.y + this.velocity.y < 0
+    || this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize
+    || this.position.y + this.velocity.y > this.tank.owner.gameServer.config.worldSize) {
+      this.destroy();
+      return;
+  }
+  var elapsed = (Date.now() - this.lastMoved);
+  this.position.x += this.velocity.x * elapsed;
+  this.position.y += this.velocity.y * elapsed;
+  /*if (this.position.x + this.velocity.x > this.tank.owner.gameServer.config.worldSize) {
     this.position.x = this.tank.owner.gameServer.config.worldSize;
   } else if (this.position.x + this.velocity.x < 0) {
     this.position.x = 0;
@@ -47,11 +60,10 @@ Bullet.prototype.update = function() {
     this.position.y = 0;
   } else {
     this.position.y += this.velocity.y;
-  }
-  /*this.position.x += this.velocity.x;
-  this.position.y += this.velocity.y;*/
+  }*/
 
-  this.elapsedTime++;
+  this.bulletLife -= elapsed;
+  this.lastMoved = Date.now();
 };
 
 Bullet.prototype.destroy = function() {

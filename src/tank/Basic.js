@@ -8,13 +8,13 @@ function Basic(player) {
   // Upgrades
   this.healthRegen       = -1;
   this.maxHealth         = -1;
-  this.bulletSpeed       = 0.4;
+  this.bulletSpeed       = 0.3;
   this.bulletPenetration = -1;
   this.bulletDamage      = 5;
   this.reload            = 500; // in milliseconds
   this.movementSpeed     = 0.25;
 
-  this.reloading = false;
+  this.reloading = false; // True when tank is reloading.
 
   this.fireLoopId = null;
   this.bulletCleanupId = setInterval(this.bulletCleanup.bind(this), 1000);
@@ -78,10 +78,14 @@ Basic.prototype.fireLoop = function() {
   bullet.fire();
   this.bullets.push(bullet);
 
-  // Set reloading to true
-  setInterval(function() {
+  // Set reloading to false
+  setTimeout(function() {
     this.reloading = false;
   }.bind(this), this.reload);
+};
+
+Basic.prototype.calcGunOffset = function() {
+  return (this.owner.getLevel()/5.0)+40;
 };
 
 Basic.prototype.bulletCleanup = function() {

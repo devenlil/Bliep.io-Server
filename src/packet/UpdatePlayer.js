@@ -4,9 +4,11 @@ function UpdatePlayer(destination, players) {
 
   //this.buffer = new ArrayBuffer(2 + (18 * players.length)); // note: buffer bigger than actual
   var bufferLength = 2 + (19 * players.length);
+
+  /* Use Packet 35 for bullets.
   players.forEach(function(player) {
-    bufferLength += player.tank.bullets.length * 9; // bullets length (disabled, use bullet packet instead)
-  });
+    bufferLength += player.tank.bullets.length * 9;
+  });*/
   this.buffer = new ArrayBuffer(bufferLength);
   this.data = new DataView(this.buffer);
   this.byteOffset = 0;
@@ -46,12 +48,15 @@ UpdatePlayer.prototype.build = function() {
     }
 
     // Bullet Count
+    this.data.setUint8(this.byteOffset++, 0);
+    /* Use packet 35 for bullets!!
+    // Bullet Count
     this.data.setUint8(this.byteOffset++, player.tank.bullets.length);
 
     player.tank.bullets.forEach(function(bullet) {
       if (bullet.active) {
         // Bullet Type Id
-        this.data.setUint8(this.byteOffset++, bullet.id);
+        this.data.setUint8(this.byteOffset++, bullet.typeId);
 
         // Bullet Position X
         this.data.setUint32(this.byteOffset, bullet.position.x);
@@ -62,6 +67,7 @@ UpdatePlayer.prototype.build = function() {
         this.byteOffset += 4;
       }
     }.bind(this));
+    */
   }.bind(this));
 
   return this.buffer;

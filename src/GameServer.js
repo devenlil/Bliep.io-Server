@@ -9,6 +9,9 @@ var Packet = require('./packet');
 var WebSocket = require('ws');
 
 function GameServer() {
+  this.startDate = parseInt((new Date()).toISOString().slice(0,10).replace(/-/g,""));
+  this.startTime =
+
   this.config = Config;
   this.logger = new Logger();
   this.logger.setVerbose(this.config.verbose);
@@ -18,6 +21,7 @@ function GameServer() {
   this.players = [];
   this.food = [];
   this.nextAvailablePid = 1;
+  this.nextAvailableBid = 1;
   this.gameLoop = null;
   this.foodLoop = null;
   this.cleanupLoop = null;
@@ -156,10 +160,19 @@ GameServer.prototype.spawnFood = function() {
 };
 
 GameServer.prototype.cleanup = function() {
-  // Called every 5 seconds
+  // Called every 1 second
+  var time = Date.now();
   this.players.forEach(function(player, index) {
     if (player.socket.readyState == WebSocket.CLOSED) {
+      // Player has disconnected
       this.players.splice(index, 1);
+    } else {
+      // Cleanup each players old known bullets
+      player.knownBullets.forEach(function(bullet, bindex) {
+        if (time > bullet.eol) {
+          player.knownBullets.splice(bindex, 1);
+        }
+      });
     }
   }.bind(this));
 };
@@ -170,6 +183,14 @@ GameServer.prototype.getNextAvailablePid = function() {
   }
   return this.nextAvailablePid++;
 };
+
+// Generates new projectile id
+GameServer.prototype.getNextAvailableBid = function() {
+  if (this.nextAvailableBid > 4294967295) {
+    this.nextAvailableBid = 1;
+  }
+  return this.nextAvailableBid++;
+}
 
 GameServer.prototype.randomPosition = function() {
   var position = {

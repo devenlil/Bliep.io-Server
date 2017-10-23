@@ -27,6 +27,7 @@ function Player(socket, gameServer) {
 
   this.viewRadius = 1000;
   this.knownPlayers = []; // Array of player ids
+  this.knownBullets = []; // Array of obj {"id": bullet_id, "time": eol_time }
   this.knownFood = [];
 }
 
@@ -39,11 +40,11 @@ Player.prototype.update = function() {
       this.socket.sendPacket(new Packet.Handshake(this.gameServer.config.worldSize),
       function(sent) {
         if (sent) {
-          this.handshake = (new Date()).getTime();
+          this.handshake = Date.now();
         }
       }.bind(this));
     } else {
-      if ((new Date()).getTime() - this.handshake > 10000) {
+      if (Date.now() - this.handshake > 10000) {
         this.gameServer.logger.onClientDisconnect(this, "No Handshake");
         this.destroy();
       }
@@ -116,11 +117,27 @@ Player.prototype.notifyUpdate = function() {
   // Update all nearby players' position & score
   this.socket.sendPacket(new Packet.UpdatePlayer(this.socket, nearbyPlayers));
   // Update all nearby players' bullets
-  /*var nearbyBullets = []
+  var unknownNearbyBullets = []; // Stores actual bullet obj (not id)
+  /*this.tank.bullets.forEach(function(bullet) {
+    if (this.knownBullets.indexOf(bullet.id) == -1) {
+      unknownNearbyBullets.push(bullet);
+      this.knownBullets.push(bullet.id);
+    }
+  }.bind(this));*/
   nearbyPlayers.forEach(function(nearbyPlayer) {
-    nearbyBullets = nearbyBullets.concat(nearbyPlayer.tank.bullets);
+    nearbyPlayer.tank.bullets.forEach(function(bullet) {
+      var index = this.knownBullets.findIndex(b => b.id == bullet.id);
+      if (index == -1) {
+        unknownNearbyBullets.push(bullet);
+        this.knownBullets.push({
+          "id": bullet.id,
+          "eol": (Date.now() + bullet.bulletLife + 1000)
+        });
+      }
+    }.bind(this));
   }.bind(this));
-  this.socket.sendPacket(new Packet.SpawnBullet(this.socket, nearbyBullets));*/
+  if (unknownNearbyBullets.length > 0)
+    this.socket.sendPacket(new Packet.SpawnBullet(this.id, unknownNearbyBullets));
 };
 
 Player.prototype.updateFood = function() {
@@ -180,6 +197,11 @@ Player.prototype.play = function(nick) {
   //this.socket.sendPacket(new Packet.InitPlayer(this.socket, [this]));
   this.liveLoop = setInterval(this.notifyUpdate.bind(this), 1000/30.0);
   this.updateFood();
+};
+
+Player.prototype.getLevel = function() {
+  // [TODO] Calculate player level from score
+  return 1;
 };
 
 Player.prototype.destroy = function() {
